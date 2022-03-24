@@ -1,0 +1,30 @@
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    enp59s0f0:
+      dhcp6: no
+    enp59s0f1:
+      dhcp6: no
+
+  bonds:
+    bond_data:
+      interfaces:
+        - enp59s0f0
+        - enp59s0f1
+      parameters:
+        mode: 802.3ad
+        lacp-rate: fast
+  vlans:
+    ccd_om_sp:
+      id: 801
+      link: bond_data
+    
+  bridges:
+    br_ccd_om:
+      addresses: [ 10.247.213.166/27 ]
+      interfaces: [ ccd_om_sp ]
+      nameservers:
+              search: [stc.com.sa]
+              addresses: [10.247.213.167/27]
+     
